@@ -1,0 +1,19 @@
+# Entornos virtuales de Python
+venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs y datos
+*.log
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store

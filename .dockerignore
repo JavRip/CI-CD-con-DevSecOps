@@ -1,0 +1,32 @@
+# Entornos virtuales de Python
+venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs y datos
+*.log
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# El Dockerfile y compose no son necesarios dentro del contenedor
+Dockerfile
+
+# README y documentación
+README.md
+
+# Los tests y código fuente no se necesitan en producción (depende de tu app)
+tests/
