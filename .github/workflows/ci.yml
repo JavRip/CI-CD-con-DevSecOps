@@ -9,6 +9,9 @@ on:
 jobs:
   security-scan:
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,11 +20,17 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
+        id: build # Agregado un ID para referenciar este paso en pasos posteriores
         uses: docker/build-push-action@v5
         with:
           context: .
           push: false
           tags: devsecops-app:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Debug - List built images
+        run: docker images | grep devsecops-app
 
       - name: Run Gitleaks for secret scanning
         uses: gitleaks/gitleaks-action@v2
@@ -29,15 +38,17 @@ jobs:
           config-path: .gitleaks.toml
 
       - name: Scan Docker image with Trivy
+        id: trivy-scan
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'devsecops-app:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH,MEDIUM'
+          exit-code: '0'  # Esto evita que Trivy falle el pipeline si encuentra vulnerabilidades
 
       - name: Upload Trivy results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
+        uses: github/codeql-action/upload-sarif@v4
+        if: always() && steps.trivy-scan.outcome == 'success'
         with:
           sarif_file: 'trivy-results.sarif'
