@@ -40,7 +40,6 @@ jobs:
           image-ref: 'devsecops-app:latest'
           format: 'sarif'
           output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH,MEDIUM'
           exit-code: '0'  # Esto evita que Trivy falle el pipeline si encuentra vulnerabilidades
 
       - name: Upload Trivy results to GitHub Security tab
