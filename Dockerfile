@@ -1,5 +1,5 @@
 # Usa una imagen base minimizada (Alpine)
-FROM python:3.9-alpine
+FROM python:3.14.3-alpine3.23
 # Crear un usuario no-root para mayor seguridad
 RUN addgroup -g 1000 appuser && \
     adduser -u 1000 -G appuser -s /bin/sh -D appuser
