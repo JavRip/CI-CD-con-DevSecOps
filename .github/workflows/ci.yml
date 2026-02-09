@@ -28,6 +28,7 @@ jobs:
           tags: devsecops-app:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          load: true
 
       - name: Debug - List built images
         run: docker images | grep devsecops-app
