@@ -30,9 +30,6 @@ jobs:
           cache-to: type=gha,mode=max
           load: true
 
-      - name: Debug - List built images
-        run: docker images | grep devsecops-app
-
       - name: Run Gitleaks for secret scanning
         uses: gitleaks/gitleaks-action@v2
 
